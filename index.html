@@ -23,6 +23,7 @@
     <a href="#nosotros" onclick="closeSidebar()">Nosotros</a>
     <a href="#ubicacion" onclick="closeSidebar()">Ubicación</a>
     <a href="#pedidos" onclick="closeSidebar()">Pedidos</a>
+    <a href="#terminos" onclick="closeSidebar()">Términos y cookies</a>
   </nav>
   <div class="sidebar-foot">TL Joyería · Envigado, Antioquia</div>
 </aside>
@@ -60,8 +61,8 @@
     <path d="M18 24 L46 24 M32 10 L32 38 M22 36 L32 54 L42 36" />
   </svg>
   <h1>TL Joyería</h1>
-  <p>Cadenas, manillas, anillos y aretes pensados para durar. Elige tus piezas, agrégalas al carrito y confirma tu pedido por WhatsApp.</p>
-  <a href="#catalogo" class="btn solid">Ver catálogo</a>
+  <p>Piezas con estilo, detalle y personalidad para acompañarte cada día. Descubre cadenas, manillas, anillos y aretes pensados para destacar y regalar.</p>
+  <a href="#catalogo" class="btn solid">Ver colección</a>
 </section>
 
 <section class="featured-section" id="featured">
@@ -204,9 +205,26 @@
   </div>
 </section>
 
+<section class="legal-section" id="terminos">
+  <div class="wrap legal-grid">
+    <div>
+      <h2>Términos y condiciones</h2>
+      <p>Este sitio web es propiedad y está administrado por <strong>Jacob Torres</strong>. El contenido, imágenes, textos y catalogo de productos tienen fines informativos y promocionales para presentar piezas de joyería de TL Joyería.</p>
+      <p>Los pedidos se gestionan principalmente por WhatsApp y se confirmarán directamente con el propietario del negocio. Todos los precios publicados están expresados en pesos colombianos (COP) y pueden estar sujetos a cambios sin previo aviso, según disponibilidad y confirmación final del pedido.</p>
+      <p>Al realizar un pedido a través de esta web o WhatsApp, el cliente acepta que la compra se concreta por acuerdo directo con el vendedor, y que la entrega o coordinación será informada por ese medio.</p>
+    </div>
+    <div>
+      <h2>Política de cookies</h2>
+      <p>Este sitio puede utilizar cookies técnicas para mejorar la experiencia del usuario, recordar preferencias del navegador y facilitar la navegación. También pueden usarse cookies de análisis para medir uso general del sitio, sin almacenar información personal sensible.</p>
+      <p>El usuario puede aceptar, rechazar o configurar el uso de cookies en su navegador según sus preferencias. Al continuar usando la web, se entiende que acepta el uso de cookies necesarias para el correcto funcionamiento del sitio.</p>
+    </div>
+  </div>
+</section>
+
 <footer>
   <span class="brand">TL Joyería</span>
-  Hecho a pedido, pieza por pieza.
+  Hecho a pedido, pieza por pieza.<br>
+  <small>Propietario: <strong>Jacob Torres</strong></small>
 </footer>
 
 <!-- Cart panel -->
@@ -346,44 +364,6 @@
         <div class="dash-card">
           <h4>Datos de cuenta</h4>
           <p id="dashEmail">—</p>
-        </div>
-
-        <div id="adminPanel" class="admin-panel">
-          <div class="admin-head">
-            <h3>Panel de administración</h3>
-            <button type="button" class="btn small" id="newProductBtn">Nuevo producto</button>
-          </div>
-          <form id="adminProductForm" class="admin-form">
-            <input type="hidden" id="adminProductId">
-            <div class="admin-grid">
-              <div>
-                <label for="adminProductName">Nombre</label>
-                <input id="adminProductName" type="text" placeholder="Nombre del producto" required>
-              </div>
-              <div>
-                <label for="adminProductCat">Categoría</label>
-                <select id="adminProductCat">
-                  <option value="cadena">Cadena</option>
-                  <option value="manilla">Manilla</option>
-                  <option value="anillo">Anillo</option>
-                  <option value="aretes">Aretes</option>
-                </select>
-              </div>
-              <div>
-                <label for="adminProductPrice">Precio</label>
-                <input id="adminProductPrice" type="number" min="1000" step="1000" placeholder="Precio" required>
-              </div>
-              <div>
-                <label for="adminProductDesc">Descripción</label>
-                <textarea id="adminProductDesc" rows="3" placeholder="Descripción del producto"></textarea>
-              </div>
-            </div>
-            <div class="admin-actions">
-              <button type="submit" class="btn solid">Guardar producto</button>
-              <button type="button" class="btn" id="cancelProductBtn">Cancelar</button>
-            </div>
-          </form>
-          <div id="adminProductsList" class="admin-products-list"></div>
         </div>
 
         <button class="btn" id="logoutBtn" style="align-self:flex-start;">Cerrar sesión</button>

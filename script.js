@@ -417,8 +417,15 @@ function setUser(name, email){
   document.getElementById('dashWelcome').textContent = 'Hola, ' + name;
   document.getElementById('dashEmail').textContent = email;
 
-  adminPanel.style.display = (email === ADMIN_EMAIL) ? 'block' : 'none';
-  if(email === ADMIN_EMAIL) renderAdminList();
+  if(email === ADMIN_EMAIL){
+    try {
+      localStorage.setItem('tl_session', email);
+      window.location.href = 'admin.html';
+    } catch (e) {}
+    return;
+  }
+
+  if(adminPanel) adminPanel.style.display = 'none';
 }
 
 function logoutUser(){
@@ -426,8 +433,204 @@ function logoutUser(){
   dashboard.classList.remove('active');
   authViews.classList.remove('hidden');
   document.getElementById('userLabel').classList.remove('show');
-  adminPanel.style.display = 'none';
+  if(adminPanel) adminPanel.style.display = 'none';
+  if(adminDashboardPage) adminDashboardPage.classList.remove('active');
   clearFeedback();
+  if (window.location.pathname.toLowerCase().endsWith('admin.html')) {
+    window.location.href = 'index.html';
+  }
+}
+
+var adminDashboardPage = document.getElementById('adminDashboardPage');
+var DEFAULT_ADMIN_ORDERS = [
+  {id:'PED-1042', client:'María P.', total:85000, status:'En preparación', item:'Cadena cubana plata', completed:false},
+  {id:'PED-1041', client:'Daniel R.', total:65000, status:'Pendiente', item:'Cadena fina dorada', completed:false},
+  {id:'PED-1040', client:'Sofía L.', total:35000, status:'Enviado', item:'Manilla ajustable dorada', completed:false},
+  {id:'PED-1039', client:'Camila V.', total:42000, status:'Completado', item:'Aretes colgantes perla', completed:true}
+];
+var DEFAULT_ADMIN_USERS = [
+  {name:'Jacob Torres', email:'admin@tljoyeria.com', role:'Propietario'},
+  {name:'María P.', email:'maria@email.com', role:'Cliente'},
+  {name:'Daniel R.', email:'daniel@email.com', role:'Cliente'},
+  {name:'Sofía L.', email:'sofia@email.com', role:'Cliente'}
+];
+
+function loadAdminOrders(){
+  try{
+    var saved = JSON.parse(localStorage.getItem('tl_admin_orders'));
+    if(saved && Array.isArray(saved) && saved.length) return saved;
+  }catch(e){}
+  return DEFAULT_ADMIN_ORDERS.slice();
+}
+function saveAdminOrders(orders){
+  try{ localStorage.setItem('tl_admin_orders', JSON.stringify(orders)); }catch(e){}
+}
+function loadAdminUsers(){
+  try{
+    var saved = JSON.parse(localStorage.getItem('tl_admin_users'));
+    if(saved && Array.isArray(saved) && saved.length) return saved;
+  }catch(e){}
+  return DEFAULT_ADMIN_USERS.slice();
+}
+function saveAdminUsers(users){
+  try{ localStorage.setItem('tl_admin_users', JSON.stringify(users)); }catch(e){}
+}
+function loadAboutContent(){
+  var saved = localStorage.getItem('tl_about_text');
+  if(saved && saved.trim()) return saved;
+  return 'TL Joyería nació con una idea simple: piezas de calidad, a precios justos, sin complicarse la vida para comprarlas. Cada producto se elige a mano pensando en que se vea bien y aguante el uso diario. Trabajamos por pedido, así que siempre podemos ayudarte a encontrar la pieza exacta que buscas o armar un set completo.';
+}
+function saveAboutContent(text){
+  try{ localStorage.setItem('tl_about_text', text); }catch(e){}
+  var aboutText = document.querySelector('#nosotros p');
+  if(aboutText){ aboutText.textContent = text; }
+}
+
+function renderAdminDashboard(){
+  var orders = loadAdminOrders();
+  var users = loadAdminUsers();
+  var completedRevenue = orders.reduce(function(sum, order){
+    return sum + (order.completed || order.status === 'Completado' ? Number(order.total || 0) : 0);
+  }, 0);
+  var pending = orders.filter(function(order){ return !(order.completed || order.status === 'Completado'); }).length;
+
+  document.getElementById('adminMetricProducts').textContent = String(products.length);
+  document.getElementById('adminMetricOrders').textContent = String(orders.length);
+  document.getElementById('adminMetricPending').textContent = String(pending);
+  document.getElementById('adminMetricRevenue').textContent = formatCOP(completedRevenue);
+
+  var ordersList = document.getElementById('adminOrdersList');
+  if(ordersList){
+    ordersList.innerHTML = orders.map(function(order){
+      var done = !!order.completed || order.status === 'Completado';
+      return '<div class="admin-order-row">' +
+        '<div><strong>' + order.id + '</strong><small>' + order.client + ' · ' + order.item + '</small></div>' +
+        '<div><strong>' + formatCOP(order.total) + '</strong><small>' + (done ? 'Cobrado' : 'Sin cobrar') + '</small></div>' +
+        '<select data-order-status="' + order.id + '">' +
+          ['Pendiente','Confirmado','En preparación','Enviado','Completado'].map(function(status){
+            return '<option value="' + status + '"' + (status === order.status ? ' selected' : '') + '>' + status + '</option>';
+          }).join('') +
+        '</select>' +
+        '<button type="button" class="admin-order-toggle' + (done ? ' done' : '') + '" data-order-toggle="' + order.id + '">' + (done ? 'Venta completada' : 'Marcar venta completa') + '</button>' +
+      '</div>';
+    }).join('');
+
+    ordersList.querySelectorAll('[data-order-status]').forEach(function(select){
+      select.addEventListener('change', function(){
+        var id = select.getAttribute('data-order-status');
+        var ordersData = loadAdminOrders();
+        var entry = ordersData.find(function(order){ return order.id === id; });
+        if(!entry) return;
+        entry.status = select.value;
+        entry.completed = select.value === 'Completado';
+        saveAdminOrders(ordersData.map(function(order){ return order.id === id ? entry : order; }));
+        renderAdminDashboard();
+      });
+    });
+
+    ordersList.querySelectorAll('[data-order-toggle]').forEach(function(button){
+      button.addEventListener('click', function(){
+        var id = button.getAttribute('data-order-toggle');
+        var ordersData = loadAdminOrders();
+        var entry = ordersData.find(function(order){ return order.id === id; });
+        if(!entry) return;
+        entry.completed = !entry.completed;
+        entry.status = entry.completed ? 'Completado' : 'Pendiente';
+        saveAdminOrders(ordersData.map(function(order){ return order.id === id ? entry : order; }));
+        renderAdminDashboard();
+      });
+    });
+  }
+
+  var categoriesList = document.getElementById('adminCategoriesList');
+  if(categoriesList){
+    var categories = ['cadena','manilla','anillo','aretes'];
+    categoriesList.innerHTML = categories.map(function(cat){
+      var count = products.filter(function(p){ return p.cat === cat; }).length;
+      return '<div class="admin-mini-item"><div class="meta"><span class="dot"></span><div><strong>' + (CAT_LABELS[cat] || cat) + '</strong><small>' + count + ' productos</small></div></div><strong>' + count + '</strong></div>';
+    }).join('');
+  }
+
+  var usersList = document.getElementById('adminUsersList');
+  if(usersList){
+    usersList.innerHTML = users.map(function(user){
+      return '<div class="admin-mini-item"><div class="meta"><span class="dot"></span><div><strong>' + user.name + '</strong><small>' + user.email + '</small></div></div><strong>' + user.role + '</strong></div>';
+    }).join('');
+  }
+
+  var aboutEditor = document.getElementById('adminAboutText');
+  if(aboutEditor){
+    aboutEditor.value = loadAboutContent();
+  }
+}
+
+function setAdminSection(section){
+  var navButtons = document.querySelectorAll('.admin-nav-item');
+  navButtons.forEach(function(button){
+    button.classList.toggle('active', button.getAttribute('data-section') === section);
+  });
+  document.querySelectorAll('.admin-section').forEach(function(panel){
+    panel.classList.toggle('active', panel.getAttribute('data-section-target') === section);
+  });
+}
+
+function bindAdminNavigation(){
+  document.querySelectorAll('.admin-nav-item').forEach(function(button){
+    button.addEventListener('click', function(){
+      setAdminSection(button.getAttribute('data-section'));
+    });
+  });
+}
+
+function showAdminDashboardPage(){
+  if(adminDashboardPage){
+    adminDashboardPage.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    bindAdminNavigation();
+    setAdminSection('resumen');
+    renderAdminDashboard();
+    renderAdminList();
+  }
+}
+
+function hideAdminDashboardPage(){
+  if(adminDashboardPage){
+    adminDashboardPage.classList.remove('active');
+  }
+  document.body.style.overflow = '';
+}
+
+function syncAboutTextFromEditor(){
+  var editor = document.getElementById('adminAboutText');
+  if(!editor) return;
+  var text = editor.value.trim();
+  if(!text) return;
+  saveAboutContent(text);
+}
+
+var adminBackToAccountBtn = document.getElementById('adminBackToAccount');
+if(adminBackToAccountBtn){
+  adminBackToAccountBtn.addEventListener('click', function(){
+    hideAdminDashboardPage();
+    var accountPage = document.getElementById('accountPage');
+    if(accountPage){ accountPage.classList.add('active'); }
+  });
+}
+
+var adminLogoutBtn = document.getElementById('adminLogoutBtn');
+if(adminLogoutBtn){
+  adminLogoutBtn.addEventListener('click', function(){
+    logoutUser();
+    hideAdminDashboardPage();
+  });
+}
+
+var saveAboutBtn = document.getElementById('saveAboutBtn');
+if(saveAboutBtn){
+  saveAboutBtn.addEventListener('click', function(){
+    syncAboutTextFromEditor();
+    showFeedback('Se actualizó la sección “Nosotros”.', 'success');
+  });
 }
 
 document.getElementById('loginForm').addEventListener('submit', function(e){
@@ -498,6 +701,8 @@ document.getElementById('recoverForm').addEventListener('submit', function(e){
 
 document.getElementById('logoutBtn').addEventListener('click', logoutUser);
 
+var adminPageFeedback = document.getElementById('adminDashboardPage');
+
 /* Botones sociales: demo visual, no hay proveedor real conectado */
 document.querySelectorAll('.social-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
@@ -553,44 +758,51 @@ function fillAdminForm(id){
 }
 
 function resetAdminForm(){
-  adminForm.reset();
-  document.getElementById('adminProductId').value = '';
+  if(adminForm){ adminForm.reset(); }
+  var idInput = document.getElementById('adminProductId');
+  if(idInput){ idInput.value = ''; }
 }
 
-document.getElementById('newProductBtn').addEventListener('click', resetAdminForm);
-document.getElementById('cancelProductBtn').addEventListener('click', resetAdminForm);
+var newProductBtn = document.getElementById('newProductBtn');
+if(newProductBtn){ newProductBtn.addEventListener('click', resetAdminForm); }
+var cancelProductBtn = document.getElementById('cancelProductBtn');
+if(cancelProductBtn){ cancelProductBtn.addEventListener('click', resetAdminForm); }
 
-adminForm.addEventListener('submit', function(e){
-  e.preventDefault();
-  var id = document.getElementById('adminProductId').value;
-  var name = document.getElementById('adminProductName').value.trim();
-  var cat = document.getElementById('adminProductCat').value;
-  var price = parseInt(document.getElementById('adminProductPrice').value, 10) || 0;
-  var desc = document.getElementById('adminProductDesc').value.trim();
+if(adminForm){
+  adminForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var id = document.getElementById('adminProductId').value;
+    var name = document.getElementById('adminProductName').value.trim();
+    var cat = document.getElementById('adminProductCat').value;
+    var price = parseInt(document.getElementById('adminProductPrice').value, 10) || 0;
+    var desc = document.getElementById('adminProductDesc').value.trim();
 
-  if(id){
-    var existing = products.find(function(p){ return p.id === id; });
-    if(existing){
-      existing.name = name; existing.cat = cat; existing.price = price; existing.desc = desc;
-      existing.image = placeholderImg(name);
+    if(id){
+      var existing = products.find(function(p){ return p.id === id; });
+      if(existing){
+        existing.name = name; existing.cat = cat; existing.price = price; existing.desc = desc;
+        existing.image = placeholderImg(name);
+      }
+    }else{
+      var newId = cat.charAt(0) + Date.now().toString(36);
+      products.push({
+        id:newId, name:name, cat:cat, price:price, desc:desc,
+        material:'—', size:'—', finish:'—', features:[], image:placeholderImg(name)
+      });
     }
-  }else{
-    var newId = cat.charAt(0) + Date.now().toString(36);
-    products.push({
-      id:newId, name:name, cat:cat, price:price, desc:desc,
-      material:'—', size:'—', finish:'—', features:[], image:placeholderImg(name)
-    });
-  }
-  saveProducts();
-  resetAdminForm();
-  renderAdminList();
-  renderProducts();
-});
+    saveProducts();
+    resetAdminForm();
+    renderAdminList();
+    renderProducts();
+    renderAdminDashboard();
+  });
+}
 
 /* ---------- Inicio ---------- */
 loadProducts();
 renderProducts();
 renderCart();
+renderAdminDashboard();
 goToSlide(0);
 
 try{
