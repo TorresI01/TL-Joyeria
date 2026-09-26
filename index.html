@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TL Joyería</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <span class="brand">TL Joyería</span>
+    <button class="icon-btn" id="closeSidebar" aria-label="Cerrar menú">✕</button>
+  </div>
+  <nav>
+    <a href="#catalogo" onclick="closeSidebar()">Catálogo</a>
+    <a href="#nosotros" onclick="closeSidebar()">Nosotros</a>
+    <a href="#ubicacion" onclick="closeSidebar()">Ubicación</a>
+    <a href="#pedidos" onclick="closeSidebar()">Pedidos</a>
+  </nav>
+  <div class="sidebar-foot">TL Joyería · Envigado, Antioquia</div>
+</aside>
+
+<header>
+  <div class="navbar">
+    <div class="navbar-left">
+      <button class="icon-btn" id="openSidebar" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a href="#" class="brand">TL Joyería</a>
+    </div>
+
+    <label class="navbar-search" for="globalSearch" aria-label="Buscar producto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg>
+      <input id="globalSearch" type="search" placeholder="Buscar pendientes, cadenas, anillos..." autocomplete="off">
+    </label>
+
+    <div class="navbar-right">
+      <span class="user-label" id="userLabel"></span>
+      <button class="icon-btn" id="openAccount" aria-label="Cuenta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </button>
+      <button class="icon-btn" id="openCart" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        <span class="badge" id="cartBadge" style="display:none;">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="eyebrow-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2">
+    <circle cx="32" cy="24" r="14"/>
+    <path d="M18 24 L46 24 M32 10 L32 38 M22 36 L32 54 L42 36" />
+  </svg>
+  <h1>TL Joyería</h1>
+  <p>Cadenas, manillas, anillos y aretes pensados para durar. Elige tus piezas, agrégalas al carrito y confirma tu pedido por WhatsApp.</p>
+  <a href="#catalogo" class="btn solid">Ver catálogo</a>
+</section>
+
+<section class="featured-section" id="featured">
+  <div class="wrap">
+    <div class="featured-header">
+      <div>
+        <p class="eyebrow">Los más vendidos</p>
+        <h2>Elegancia hecha para cada día</h2>
+      </div>
+      <a href="#catalogo" class="btn small">Ver catálogo</a>
+    </div>
+
+    <div class="featured-slider" aria-label="Productos destacados">
+      <article class="featured-slide active">
+        <div class="featured-image" style="background-image:url('https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=80');"></div>
+        <div class="featured-copy">
+          <span class="tag">Cadena premium</span>
+          <h3>Cadena cubana plata</h3>
+          <p>Acabado brillante, diseño elegante y una presencia moderna para cualquier look.</p>
+          <strong>$85.000</strong>
+        </div>
+      </article>
+
+      <article class="featured-slide">
+        <div class="featured-image" style="background-image:url('https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&w=1200&q=80');"></div>
+        <div class="featured-copy">
+          <span class="tag">Manillas favoritas</span>
+          <h3>Set de manillas doradas</h3>
+          <p>Perfectas para regalar, combinar o usar a diario con un estilo sofisticado.</p>
+          <strong>$55.000</strong>
+        </div>
+      </article>
+
+      <article class="featured-slide">
+        <div class="featured-image" style="background-image:url('https://images.unsplash.com/photo-1601821765780-754fa98637c1?auto=format&fit=crop&w=1200&q=80');"></div>
+        <div class="featured-copy">
+          <span class="tag">Anillos tendencia</span>
+          <h3>Anillo con piedra</h3>
+          <p>Un diseño sobrio y luminoso para quienes buscan un detalle con personalidad.</p>
+          <strong>$48.000</strong>
+        </div>
+      </article>
+    </div>
+
+    <div class="featured-dots" aria-label="Navegación del carrusel">
+      <button class="dot active" type="button" aria-label="Slide 1"></button>
+      <button class="dot" type="button" aria-label="Slide 2"></button>
+      <button class="dot" type="button" aria-label="Slide 3"></button>
+    </div>
+  </div>
+</section>
+
+<section id="catalogo">
+  <div class="wrap">
+    <h2 class="section-title">Catálogo</h2>
+    <p class="section-sub">Precios en pesos colombianos (COP). Agrega lo que te guste al carrito.</p>
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="todos">Todos</button>
+      <button class="filter-btn" data-filter="cadena">Cadenas</button>
+      <button class="filter-btn" data-filter="manilla">Manillas</button>
+      <button class="filter-btn" data-filter="anillo">Anillos</button>
+      <button class="filter-btn" data-filter="aretes">Aretes</button>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="wrap about">
+    <div class="about-visual">
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M32 6 L52 24 L44 58 L20 58 L12 24 Z"/><path d="M12 24 L52 24 M32 6 L20 24 M32 6 L44 24 M20 24 L32 58 M44 24 L32 58"/></svg>
+    </div>
+    <div>
+      <h2>Sobre nosotros</h2>
+      <p>TL Joyería nació con una idea simple: piezas de calidad, a precios justos, sin complicarse la vida para comprarlas. Cada producto se elige a mano pensando en que se vea bien y aguante el uso diario.</p>
+      <p>Trabajamos por pedido, así que siempre podemos ayudarte a encontrar la pieza exacta que buscas o armar un set completo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="location" id="ubicacion">
+  <div class="wrap location-grid">
+    <div class="map-box" aria-label="Mapa de ubicación">
+      <iframe
+        title="Ubicación de TL Joyería"
+        src="https://www.google.com/maps?q=Envigado%20Antioquia&z=13&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div>
+      <h2>Ubicación</h2>
+      <p>Envigado, Antioquia — dirección exacta al confirmar tu pedido.</p>
+      <ul class="hours-list">
+        <li><span>Lunes a viernes</span><span>9:00 am – 6:00 pm</span></li>
+        <li><span>Sábados</span><span>10:00 am – 2:00 pm</span></li>
+        <li><span>Domingos</span><span>Cerrado</span></li>
+      </ul>
+      <a class="btn" id="mapsLink" href="https://www.google.com/maps/search/?api=1&query=Envigado+Antioquia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+<section class="order" id="pedidos">
+  <div class="wrap order-grid">
+    <div>
+      <h2>Haz tu pedido</h2>
+      <p>Escríbenos directo por WhatsApp, arma tu carrito arriba, o completa el formulario y te contactamos para confirmar disponibilidad y entrega.</p>
+      <div class="whatsapp-box">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.2c-.22.62-1.28 1.18-1.77 1.24-.45.06-.98.09-1.58-.1a13.3 13.3 0 0 1-1.87-.68c-3.3-1.43-5.28-4.75-5.44-4.97-.16-.22-1.3-1.73-1.3-3.3 0-1.56.82-2.33 1.1-2.65.28-.32.62-.4.82-.4h.6c.19 0 .45-.07.7.53.28.66.94 2.28 1.02 2.44.08.16.14.35.03.56-.11.22-.17.35-.33.54-.17.19-.35.42-.5.56-.16.16-.33.33-.14.65.19.33.85 1.4 1.83 2.27 1.26 1.12 2.32 1.47 2.65 1.63.33.16.52.14.71-.08.19-.22.83-.97 1.05-1.3.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.16.55.24.63.38.08.14.08.79-.14 1.41z"/></svg>
+        <span>Respuesta rápida, de lunes a sábado · WhatsApp +57 321 5203260.</span>
+        <a href="https://wa.me/573215203260" target="_blank" rel="noopener" class="btn">Escribir</a>
+      </div>
+    </div>
+    <div>
+      <form id="orderForm">
+        <div>
+          <label for="name">Nombre</label>
+          <input id="name" type="text" required>
+        </div>
+        <div>
+          <label for="category">Producto</label>
+          <select id="category">
+            <option>Cadena</option>
+            <option>Manilla</option>
+            <option>Anillo</option>
+            <option>Aretes</option>
+            <option>No estoy seguro/a</option>
+          </select>
+        </div>
+        <div>
+          <label for="details">Detalles del pedido</label>
+          <textarea id="details" placeholder="Cantidad, talla, color, para quién es, etc."></textarea>
+        </div>
+        <button type="submit">Enviar por WhatsApp</button>
+        <p class="form-note">Se abrirá WhatsApp con tu pedido ya redactado, listo para enviar.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">TL Joyería</span>
+  Hecho a pedido, pieza por pieza.
+</footer>
+
+<!-- Cart panel -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head">
+    <h3 style="margin:0;color:var(--silver-bright);">Tu carrito</h3>
+    <button class="icon-btn" id="closeCart" aria-label="Cerrar carrito">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="pay-methods" id="payMethods">
+      <label class="pay-option selected">
+        <input type="radio" name="pay" value="Contraentrega" checked>
+        <div class="pay-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M2 11h20"/></svg></div>
+        <span>Contraentrega</span>
+      </label>
+      <label class="pay-option">
+        <input type="radio" name="pay" value="Nequi">
+        <img class="pay-logo" src="https://cdn.simpleicons.org/nequi/00a650" alt="Nequi" />
+        <span>Nequi</span>
+      </label>
+      <label class="pay-option">
+        <input type="radio" name="pay" value="Transferencia Bancolombia">
+        <img class="pay-logo" src="https://cdn.simpleicons.org/bancolombia/ffcc29" alt="Bancolombia" />
+        <span>Bancolombia</span>
+      </label>
+      <label class="pay-option">
+        <input type="radio" name="pay" value="Visa">
+        <img class="pay-logo" src="https://cdn.simpleicons.org/visa/1a1f71" alt="Visa" />
+        <span>Visa</span>
+      </label>
+      <label class="pay-option">
+        <input type="radio" name="pay" value="Mastercard">
+        <img class="pay-logo" src="https://cdn.simpleicons.org/mastercard/eb001b" alt="Mastercard" />
+        <span>Mastercard</span>
+      </label>
+    </div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div>
+    <button class="btn solid" style="width:100%;" id="checkoutBtn" disabled>Enviar pedido por WhatsApp</button>
+  </div>
+</div>
+
+<!-- Página completa de cuenta -->
+<div class="account-page" id="accountPage">
+  <div class="account-top">
+    <span class="brand">TL Joyería</span>
+    <button class="icon-btn" id="closeAccount" aria-label="Volver">✕</button>
+  </div>
+  <div class="account-shell">
+    <div class="account-side">
+      <div>
+        <h2>Tu espacio TL</h2>
+        <p>Guarda tus datos, revisa tus pedidos anteriores y agiliza tu próxima compra.</p>
+      </div>
+      <p class="quote">"Piezas para acompañar cada día." — TL Joyería</p>
+    </div>
+
+    <div class="account-form-wrap">
+      <div id="authViews">
+        <div class="auth-tabs">
+          <button class="tab-btn active" data-tab="login">Iniciar sesión</button>
+          <button class="tab-btn" data-tab="register">Registrarse</button>
+        </div>
+
+        <div id="authFeedback" class="auth-feedback" aria-live="polite"></div>
+
+        <form class="auth-form active" id="loginForm">
+          <h2>Bienvenida de nuevo</h2>
+          <p class="sub">Ingresa para ver tu cuenta.</p>
+          <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+            <input id="loginEmail" type="email" placeholder="Correo" required>
+          </div>
+          <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="9" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="loginPass" type="password" placeholder="Contraseña" required>
+          </div>
+          <button type="submit" class="btn solid" style="width:100%;">Entrar</button>
+          <button type="button" class="link-btn" id="forgotPasswordBtn">¿Olvidaste tu contraseña?</button>
+          <div class="divider">o continúa con</div>
+          <div class="social-row">
+            <button type="button" class="social-btn social-google" aria-label="Continuar con Google">
+              <img src="https://cdn.simpleicons.org/google/4285F4" alt="Google" />
+              <span>Google</span>
+            </button>
+            <button type="button" class="social-btn social-facebook" aria-label="Continuar con Facebook">
+              <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" />
+              <span>Facebook</span>
+            </button>
+          </div>
+          <p class="auth-note">Acceso de muestra: se guarda en este navegador, sin servidor real.</p>
+        </form>
+
+        <form class="auth-form" id="registerForm">
+          <h2>Crear cuenta</h2>
+          <p class="sub">Regístrate para agilizar tus próximos pedidos.</p>
+          <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+            <input id="regName" type="text" placeholder="Nombre" required>
+          </div>
+          <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+            <input id="regEmail" type="email" placeholder="Correo" required>
+          </div>
+          <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="9" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="regPass" type="password" placeholder="Contraseña" required>
+          </div>
+          <button type="submit" class="btn solid" style="width:100%;">Registrarme</button>
+          <p class="auth-note">Acceso de muestra: se guarda en este navegador, sin servidor real.</p>
+        </form>
+      </div>
+
+      <div id="recoveryPanel" class="recovery-panel" aria-live="polite">
+        <h2>Recuperar contraseña</h2>
+        <p>Escribe tu correo y define una nueva contraseña.</p>
+        <form id="recoverForm">
+          <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+            <input id="recoverEmail" type="email" placeholder="Correo" required>
+          </div>
+          <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="9" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="recoverPass" type="password" placeholder="Nueva contraseña" required>
+          </div>
+          <button type="submit" class="btn solid" style="width:100%;">Guardar nueva contraseña</button>
+          <button type="button" class="link-btn" id="backToLoginBtn">Volver al inicio de sesión</button>
+        </form>
+      </div>
+
+      <div class="dashboard" id="dashboard">
+        <h2 class="dash-welcome" id="dashWelcome">Hola</h2>
+        <div class="dash-card">
+          <h4>Tus pedidos</h4>
+          <p class="dash-empty">Aún no tienes pedidos registrados. Cuando compres por WhatsApp aparecerán aquí.</p>
+        </div>
+        <div class="dash-card">
+          <h4>Datos de cuenta</h4>
+          <p id="dashEmail">—</p>
+        </div>
+
+        <div id="adminPanel" class="admin-panel">
+          <div class="admin-head">
+            <h3>Panel de administración</h3>
+            <button type="button" class="btn small" id="newProductBtn">Nuevo producto</button>
+          </div>
+          <form id="adminProductForm" class="admin-form">
+            <input type="hidden" id="adminProductId">
+            <div class="admin-grid">
+              <div>
+                <label for="adminProductName">Nombre</label>
+                <input id="adminProductName" type="text" placeholder="Nombre del producto" required>
+              </div>
+              <div>
+                <label for="adminProductCat">Categoría</label>
+                <select id="adminProductCat">
+                  <option value="cadena">Cadena</option>
+                  <option value="manilla">Manilla</option>
+                  <option value="anillo">Anillo</option>
+                  <option value="aretes">Aretes</option>
+                </select>
+              </div>
+              <div>
+                <label for="adminProductPrice">Precio</label>
+                <input id="adminProductPrice" type="number" min="1000" step="1000" placeholder="Precio" required>
+              </div>
+              <div>
+                <label for="adminProductDesc">Descripción</label>
+                <textarea id="adminProductDesc" rows="3" placeholder="Descripción del producto"></textarea>
+              </div>
+            </div>
+            <div class="admin-actions">
+              <button type="submit" class="btn solid">Guardar producto</button>
+              <button type="button" class="btn" id="cancelProductBtn">Cancelar</button>
+            </div>
+          </form>
+          <div id="adminProductsList" class="admin-products-list"></div>
+        </div>
+
+        <button class="btn" id="logoutBtn" style="align-self:flex-start;">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="product-modal" id="productModal" aria-hidden="true">
+  <div class="product-modal-backdrop" id="productModalBackdrop"></div>
+  <div class="product-modal-panel" role="dialog" aria-modal="true" aria-labelledby="productDetailName">
+    <button class="product-modal-close" id="productModalClose" aria-label="Cerrar">✕</button>
+    <div class="product-modal-content">
+      <div class="product-detail-image-wrap">
+        <img id="productDetailImage" src="" alt="Producto TL Joyería">
+      </div>
+      <div class="product-detail-info">
+        <div class="product-detail-breadcrumb" id="productDetailCategory">Cadena</div>
+        <h2 id="productDetailName">Producto</h2>
+        <div class="product-detail-price" id="productDetailPrice">$0</div>
+        <div class="product-detail-sku" id="productDetailSku">SKU: —</div>
+        <p id="productDetailDesc" class="product-detail-desc"></p>
+
+        <div class="product-detail-meta">
+          <div class="meta-item">
+            <span>Material</span>
+            <strong id="productDetailMaterial">—</strong>
+          </div>
+          <div class="meta-item">
+            <span>Talla</span>
+            <strong id="productDetailSize">—</strong>
+          </div>
+          <div class="meta-item">
+            <span>Acabado</span>
+            <strong id="productDetailFinish">—</strong>
+          </div>
+        </div>
+
+        <ul id="productDetailFeatures" class="product-detail-features"></ul>
+
+        <div class="product-detail-actions">
+          <button class="btn solid" id="productDetailBuy">Agregar al carrito</button>
+          <button class="btn" id="productDetailContinue" type="button">Seguir viendo</button>
+        </div>
+
+        <div class="payment-box">
+          <h3>Métodos de pago</h3>
+          <div class="payment-list">
+            <div class="payment-item"><img src="https://cdn.simpleicons.org/nequi/00a650" alt="Nequi"><span>Nequi</span></div>
+            <div class="payment-item"><img src="https://cdn.simpleicons.org/bancolombia/ffcc29" alt="Bancolombia"><span>Bancolombia</span></div>
+            <div class="payment-item"><img src="https://cdn.simpleicons.org/visa/1a1f71" alt="Visa"><span>Visa</span></div>
+            <div class="payment-item"><img src="https://cdn.simpleicons.org/mastercard/eb001b" alt="Mastercard"><span>Mastercard</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<a class="whatsapp-float" href="https://wa.me/573215203260?text=Hola%20TL%20Joyer%C3%ADa%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" aria-label="Chatear por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.78 11.78 0 0 0 12.05 1C6.18 1 1.3 5.86 1.3 11.72c0 2.07.55 4.1 1.6 5.9L1 23l5.53-1.48a10.7 10.7 0 0 0 5.52 1.6h.01c5.87 0 10.75-4.86 10.75-10.72 0-2.86-1.1-5.55-3.29-7.92ZM12.05 19.8a8.95 8.95 0 0 1-4.56-1.24l-.33-.2-3.28.88.88-3.2-.22-.33A8.94 8.94 0 1 1 12.05 19.8Zm4.92-6.67c-.27-.14-1.58-.78-1.82-.87-.24-.09-.42-.14-.6.14-.18.27-.69.87-.85 1.05-.16.18-.3.2-.58.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.42.12-.56.12-.12.27-.3.4-.45.13-.15.18-.26.27-.44.09-.18.05-.33-.02-.47-.07-.14-.6-1.45-.82-1.98-.21-.52-.43-.45-.6-.45h-.51c-.18 0-.47.07-.72.33-.25.27-1.05 1.02-1.05 2.48s1.07 2.87 1.22 3.06c.15.18 2.08 3.18 5.04 4.45.7.3 1.25.48 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.38.24-.68.24-1.27.17-1.39-.07-.12-.24-.18-.51-.32Z"/></svg>
+</a>
+</body>
+</html>
