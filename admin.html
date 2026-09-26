@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TL Joyería | Admin</title>
+    <meta name="description" content="Panel administrativo de TL Joyería." />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body class="admin-body">
+    <div class="admin-app">
+      <aside class="admin-sidebar">
+        <div class="brand-block">
+          <span class="brand-mark">TL Joyería</span>
+          <small>Panel administrativo</small>
+        </div>
+
+        <nav class="admin-nav" aria-label="Navegación del administrador">
+          <button class="admin-nav-item active" type="button" data-section="resumen">Resumen</button>
+          <button class="admin-nav-item" type="button" data-section="pedidos">Pedidos</button>
+          <button class="admin-nav-item" type="button" data-section="categorias">Categorías</button>
+          <button class="admin-nav-item" type="button" data-section="usuarios">Usuarios</button>
+          <button class="admin-nav-item" type="button" data-section="productos">Productos</button>
+          <button class="admin-nav-item" type="button" data-section="nosotros">Nosotros</button>
+        </nav>
+
+        <div class="sidebar-actions">
+          <button class="btn btn-primary" id="backToStoreBtn" type="button">Volver a la tienda</button>
+          <button class="btn btn-secondary" id="adminLogoutBtn" type="button">Cerrar sesión</button>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <p class="eyebrow">Panel de control</p>
+            <h1>Administración TL Joyería</h1>
+          </div>
+          <div class="admin-user-tag">
+            <span>Owner</span>
+            <strong>Jacob Torres</strong>
+          </div>
+        </header>
+
+        <section class="admin-section active" data-section-target="resumen">
+          <div class="stats-grid">
+            <article class="stat-card">
+              <span>Productos</span>
+              <strong id="adminMetricProducts">0</strong>
+              <small>En catálogo</small>
+            </article>
+            <article class="stat-card">
+              <span>Pedidos</span>
+              <strong id="adminMetricOrders">0</strong>
+              <small>Totales</small>
+            </article>
+            <article class="stat-card">
+              <span>Pendientes</span>
+              <strong id="adminMetricPending">0</strong>
+              <small>Por entregar</small>
+            </article>
+            <article class="stat-card accent">
+              <span>Ingresos</span>
+              <strong id="adminMetricRevenue">$0</strong>
+              <small>Ventas completadas</small>
+            </article>
+          </div>
+        </section>
+
+        <section class="admin-section" data-section-target="pedidos">
+          <article class="panel-card full">
+            <div class="panel-head">
+              <h3>Pedidos</h3>
+              <span>Estado</span>
+            </div>
+            <div id="adminOrdersList" class="order-list"></div>
+          </article>
+        </section>
+
+        <section class="admin-section" data-section-target="categorias">
+          <article class="panel-card full">
+            <div class="panel-head">
+              <h3>Categorías</h3>
+              <span>Inventario</span>
+            </div>
+            <div id="adminCategoriesList" class="mini-list"></div>
+          </article>
+        </section>
+
+        <section class="admin-section" data-section-target="usuarios">
+          <article class="panel-card full">
+            <div class="panel-head">
+              <h3>Usuarios</h3>
+              <span>Activos</span>
+            </div>
+            <div id="adminUsersList" class="mini-list"></div>
+          </article>
+        </section>
+
+        <section class="admin-section" data-section-target="productos">
+          <article class="panel-card full">
+            <div class="panel-head">
+              <h3>Catálogo</h3>
+              <button type="button" class="btn btn-primary btn-small" id="newProductBtn">Nuevo producto</button>
+            </div>
+
+            <form id="adminProductForm" class="admin-form">
+              <input type="hidden" id="adminProductId" />
+              <div class="admin-form-grid">
+                <div>
+                  <label for="adminProductName">Nombre</label>
+                  <input id="adminProductName" type="text" placeholder="Nombre del producto" required />
+                </div>
+                <div>
+                  <label for="adminProductCat">Categoría</label>
+                  <select id="adminProductCat">
+                    <option value="cadena">Cadena</option>
+                    <option value="manilla">Manilla</option>
+                    <option value="anillo">Anillo</option>
+                    <option value="aretes">Aretes</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="adminProductPrice">Precio</label>
+                  <input id="adminProductPrice" type="number" min="1000" step="1000" placeholder="Precio" required />
+                </div>
+                <div>
+                  <label for="adminProductDesc">Descripción</label>
+                  <textarea id="adminProductDesc" rows="3" placeholder="Descripción del producto"></textarea>
+                </div>
+              </div>
+              <div class="admin-form-actions">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" id="cancelProductBtn">Cancelar</button>
+              </div>
+            </form>
+
+            <div id="adminProductsList" class="admin-products-table"></div>
+          </article>
+        </section>
+
+        <section class="admin-section" data-section-target="nosotros">
+          <article class="panel-card full">
+            <div class="panel-head">
+              <h3>Nosotros</h3>
+              <button type="button" class="btn btn-primary btn-small" id="saveAboutBtn">Guardar cambios</button>
+            </div>
+            <textarea id="adminAboutText" class="about-editor" rows="8"></textarea>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

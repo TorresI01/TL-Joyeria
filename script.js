@@ -487,6 +487,15 @@ function saveAboutContent(text){
 }
 
 function renderAdminDashboard(){
+  var productsMetric = document.getElementById('adminMetricProducts');
+  var ordersMetric = document.getElementById('adminMetricOrders');
+  var pendingMetric = document.getElementById('adminMetricPending');
+  var revenueMetric = document.getElementById('adminMetricRevenue');
+
+  if(!productsMetric && !ordersMetric && !pendingMetric && !revenueMetric && !document.getElementById('adminOrdersList') && !document.getElementById('adminCategoriesList') && !document.getElementById('adminUsersList')){
+    return;
+  }
+
   var orders = loadAdminOrders();
   var users = loadAdminUsers();
   var completedRevenue = orders.reduce(function(sum, order){
@@ -494,10 +503,10 @@ function renderAdminDashboard(){
   }, 0);
   var pending = orders.filter(function(order){ return !(order.completed || order.status === 'Completado'); }).length;
 
-  document.getElementById('adminMetricProducts').textContent = String(products.length);
-  document.getElementById('adminMetricOrders').textContent = String(orders.length);
-  document.getElementById('adminMetricPending').textContent = String(pending);
-  document.getElementById('adminMetricRevenue').textContent = formatCOP(completedRevenue);
+  if(productsMetric) productsMetric.textContent = String(products.length);
+  if(ordersMetric) ordersMetric.textContent = String(orders.length);
+  if(pendingMetric) pendingMetric.textContent = String(pending);
+  if(revenueMetric) revenueMetric.textContent = formatCOP(completedRevenue);
 
   var ordersList = document.getElementById('adminOrdersList');
   if(ordersList){
